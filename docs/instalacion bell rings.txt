@@ -1,0 +1,49 @@
+mysql apache2 php phpmyadmin crontab 
+
+sudo crontab -e
+@reboot sh /home/pi/Documents/launchbr.sh >/home/pi/logs/cronlog 2>&1
+
+service cron status
+sudo service cron restart
+
+sudo  chmod 755 -R /var/www/html/
+
+php gpio
+sudo apt-get install git-core
+git clone git://git.drogon.net/wiringPi
+cd wiringPi/
+./build
+
+sudo apt-get install mysql-server
+sudo apt-get install apache2 php5 libapache2-mod-php5
+sudo apt-get install python-mysqldb
+sudo apt-get install phpmyadmin
+sudo nano /etc/apache2/apache2.conf
+include /etc/phpmyadmin/apache.conf
+sudo /etc/init.d/apache2 restart
+
+Editing Network Configuration
+sudo nano /etc/network/interfaces
+se cambia 
+iface eth0 inet dhcp
+por 
+iface eth0 inet static
+y se agregan las siguientes lineas
+address 192.168.1.81
+netmask 255.255.255.0
+network 192.168.1.0
+broadcast 192.168.1.255
+gateway 192.168.1.254
+
+Remove any existing leases
+sudo rm /var/lib/dhcp/*
+
+sonido
+sudo apt-get install build-essential python-dev python-pip
+sudo pip install psutil
+verifica, si no retorna nada todo esta OK
+sudo python -c "import psutil"
+
+instalacion de reproductor de audio
+sudo apt-get install omxplayer
+
